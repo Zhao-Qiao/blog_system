@@ -6,9 +6,8 @@ import './LoginScreen.css'
 function LoginScreen(props) {
     console.log(props)
     const navigate = useNavigate()
-    // const [signIn, setSignIn] = useState(false)
     const [LoginState, setLoginState] = useState(false) // value: false if not logged in, username if logged in
-    const [usertype, setUsertype] = useState(null) // value: 'user' or 'admin' or 'superadmin' [superadmin can create admin accounts
+    const [usertype, setUsertype] = useState(null) // value: 'user' or 'admin' or null if not logged in
     const usernameRef = useRef(null)
     const passwordRef = useRef(null)
     const Login = (e)=>{
@@ -23,20 +22,20 @@ function LoginScreen(props) {
                 setUsertype(null)
             }else{
                 setLoginState(response.data[0].username)
-                console.log(response.data[0].username)
-                console.log('fuck')
                 setUsertype(response.data[0].type)
-                console.log(usertype)
                 if(response.data[0].type === 'user'){
                     navigate('/user')
                 }
                 else if(response.data[0].type === 'admin'){
                     navigate('/admin')
                 }
+                else{
+                    // redirect to error page
+                    navigate('/ERROR')
+                }
             }
         })
         console.log(usernameRef.current.value)
-        //sign in to mssql database
     }
     const register = (e)=>{
         e.preventDefault()
