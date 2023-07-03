@@ -44,6 +44,22 @@ app.post('/api/login', (req, res) => {
     })
 })
 
+app.post('/api/fetch_user', (req, res) => {
+    // query username and password from database, returns query result
+    const sqlInsert = "SELECT * FROM USER"
+    db.query(sqlInsert,(err, result)=>{
+      console.log(err)
+        console.log(result)
+        if (result.length > 0) {
+            console.log(result)
+            res.send(result)
+        } else {
+            res.send({message: "No user exists!"})
+        }
+    })
+})
+
+
 app.post('/api/rm_user', (req, res) => {
 //      This function is used by admin to remove user from database
     const username = req.body.username
