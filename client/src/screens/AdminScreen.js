@@ -40,6 +40,16 @@ function AdminScreen() {
     };
 
     const [userList, setUserList] = useState([])
+    const [showPassword, setShowPassword] = useState(false);
+    const [showPasswordUser, setShowPasswordUser] = useState(null);
+    const changepw = (username) => {
+        if (showPasswordUser == username) {
+            if (showPassword) setShowPassword(false);
+            else setShowPassword(true);
+        }
+        else
+            setShowPasswordUser(username);
+    };
     const columns = [
         { name: "UID", uid: "uid" },
         { name: "USERNAME", uid: "username" },
@@ -69,14 +79,20 @@ function AdminScreen() {
                 );
             case "password":
                 return (
-                    <Text small>{cellValue}</Text>
+                    <Text small>
+                        {showPassword && showPasswordUser == user.username ? (
+                            cellValue
+                        ) : (
+                            "********"
+                        )}
+                    </Text>
                 );
             case "actions":
                 return (
                     <Row justify="center" align="center">
                         <Col css={{ d: "flex" }}>
                             <Tooltip text="View">
-                                <IconButton auto size="small" color="secondary">
+                                <IconButton auto size="small" color="secondary" onClick={() => changepw(user.username)}>
                                     <EyeIcon size={20} fill="#979797" />
                                 </IconButton>
                             </Tooltip>
