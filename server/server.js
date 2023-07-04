@@ -17,6 +17,16 @@ const db = mysql.createConnection({
     database: "task_management_system"
 })
 
+app.post('/api/submit_content', (req, res) => {
+    const username = req.body.username
+    const time = req.body.time
+    const content = req.body.content
+    const title = req.body.title
+    const sqlInsert = "INSERT INTO POSTS (time,username, title,content) VALUES (?, ?,?,?)"
+    db.query(sqlInsert, [time, username, title, content], (err, result) => {
+        console.log(err)
+    })
+})
 
 // localhost:4000/api/register
 app.post('/api/register', (req, res) => {

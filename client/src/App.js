@@ -2,6 +2,7 @@ import './App.css';
 import LoginScreen from "./screens/LoginScreen";
 import UserScreen from "./screens/UserScreen";
 import TestPage from "./screens/TestPage";
+import TestPageQ from "./screens/TestPage2";
 import AdminScreen from "./screens/AdminScreen";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import ErrorPage from "./screens/ErrorPage";
@@ -17,6 +18,7 @@ function App() {
           <Route path="/user" element={<UserScreen />} />
           <Route path="/admin" element={<AdminScreen />} />
           <Route path="/testpage" element={<TestPage />} />
+          <Route path="/q" element={<TestPageQ />} />
           <Route path="*" element={<ErrorPage />} />
         </Routes>
       </BrowserRouter>
