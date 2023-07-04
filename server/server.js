@@ -12,7 +12,8 @@ app.use(cors());
 const db = mysql.createConnection({
     host: 'localhost',
     user: "root",
-    password: "Dd20020429",
+    // password: "Dd20020429",
+    password: "mysql",
     database: "task_management_system"
 })
 
@@ -59,6 +60,22 @@ app.post('/api/fetch_user', (req, res) => {
     })
 })
 
+app.post('/api/search_user', (req, res) => {
+    // query username and password from database, returns query result
+    const searchStr = req.body.searchstr
+    const sqlInsert = "SELECT * FROM USER WHERE username LIKE ?"
+    db.query(sqlInsert, [`%${searchStr}%`], (err, result) => {
+        console.log(err)
+        console.log(result)
+        if (result.length > 0) {
+            console.log(result)
+            res.send(result)
+        } else {
+            res.send({ message: "No user exists!" })
+        }
+    })
+})
+
 app.post('/api/change_user_type', (req, res) => {
     const username = req.body.username
     const type = req.body.type
@@ -76,6 +93,28 @@ app.post('/api/change_user_type', (req, res) => {
     })
 })
 
+app.post('/api/check_follow', (req, res) => {
+    const follower = req.body.follower
+    const followee = req.body.followee
+    const sqlInsert = "SELECT * FROM FOLLOW WHERE follower = ? AND followee = ?"
+    db.query(sqlInsert, [follower, followee], (err, result) => {
+        console.log(err)
+        if (result.length > 0) {
+            res.send(true)
+        } else {
+            res.send(false)
+        }
+    })
+})
+
+app.post('/api/set_follow', (req, res) => {
+    const follower = req.body.follower
+    const followee = req.body.followee
+    const sqlInsert = "INSERT INTO FOLLOW (follower,followee) VALUES (?, ?)"
+    db.query(sqlInsert, [follower, followee], (err, result) => {
+        console.log(err)
+    })
+})
 
 app.post('/api/rm_user', (req, res) => {
     //      This function is used by admin to remove user from database
