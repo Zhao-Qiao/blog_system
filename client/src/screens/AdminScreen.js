@@ -47,8 +47,11 @@ function AdminScreen() {
             if (showPassword) setShowPassword(false);
             else setShowPassword(true);
         }
-        else
+        else {
             setShowPasswordUser(username);
+            setShowPassword(true);
+        }
+
     };
     const columns = [
         { name: "UID", uid: "uid" },
