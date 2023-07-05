@@ -203,7 +203,9 @@ app.post('/api/update_task', (req, res) => {
 
 app.post('/api/fetch_content', (req, res) => {
   //fetch content by usernames
-    const userlist = req.body.userlist.toString()
+    const userlist = req.body.userlist
+    // userlist cannot be resolved properly
+
     const sqlInsert = "SELECT * FROM posts WHERE username IN (?)"
     console.log('userlist', userlist)
     db.query(sqlInsert, [userlist], (err, result) => {
