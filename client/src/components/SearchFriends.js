@@ -1,13 +1,13 @@
-import React, {useEffect, useState, useRef, useContext} from 'react'
+import React, { useEffect, useState, useRef, useContext } from 'react'
 import { Card, Dropdown } from "@nextui-org/react";
-import { Button, Grid, Input, Loading, Table, Col, Tooltip, User, Text, Row } from '@nextui-org/react';
+import { Button, Grid, Input, Loading, Table, Col, Tooltip, User, Text, Row, spacer } from '@nextui-org/react';
 import Axios from "axios";
 // import { HeartIcon } from './HeartIcon';
-import {UserContext} from "../App";
+import { UserContext } from "../App";
 
 function SearchFriends(props) {
     const UserState = useContext(UserContext)
-    const {username}  = UserState.UserState
+    const { username } = UserState.UserState
     console.log('username,', username)
     const columns = [
         { name: "NAME", uid: "username" },
@@ -93,64 +93,73 @@ function SearchFriends(props) {
         fetchSearchInfo("");
     }, [])
     return (
-        <div>
-            <Grid.Container gap={4}>
-                <Grid>
-                    <Input
-                        ref={strRef}
-                        clearable
-                        contentRightStyling={false}
-                        placeholder="Search..."
-                        contentRight={
-                            <Button shadow color="gradient" auto rounded onClick={() => fetchSearchInfo(strRef.current.value)}>
-                                {">"}
-                            </Button>
-                        }
-                    />
-                </Grid>
-            </Grid.Container>
-            <Table
-                bordered
-                shadow={false}
-                color="secondary"
-                aria-label="Example pagination  table"
-                css={{
-                    height: "auto",
-                    minWidth: "100%",
-                }}
-                selectionMode="none"
-            >
-                <Table.Header columns={columns}>
-                    {(column) => (
-                        <Table.Column
-                            key={column.uid}
-                            hideHeader={column.uid === "actions"}
-                            align={column.uid === "actions" ? "center" : "start"}>
-                            {column.name}
-                        </Table.Column>
-                    )}
-                </Table.Header>
-                <Table.Body items={searchList}>
-                    {searchList.map(user => (
-                        <Table.Row>
-                            {columns.map(col => (
-                                <Table.Cell>
-                                    {console.log(col.uid)}
-                                    {renderCell(user, col.uid)}
-                                </Table.Cell>))}
-                        </Table.Row>
-                    ))}
-                </Table.Body>
-                <Table.Pagination
-                    shadow
-                    noMargin
-                    align="center"
-                    rowsPerPage={7}
-                    onPageChange={(page) => console.log({ page })}
-                />
-            </Table>
-            <Button onClick={props.exit} css={{mx:'auto', mt:'10'}}>Confirm</Button>
-        </div>
+        <div style={{
+            display: "flex",
+            justifyContent: "center"
+        }}>
+            <Card isHoverable css={{ mw: "1200px" }}>
+                <Card.Body>
+                    <Grid.Container gap={4}>
+                        <Grid>
+                            <Input
+                                ref={strRef}
+                                clearable
+                                contentRightStyling={false}
+                                placeholder="Search..."
+                                contentRight={
+                                    <Button shadow color="gradient" auto rounded onClick={() => fetchSearchInfo(strRef.current.value)}>
+                                        {">"}
+                                    </Button>
+                                }
+                                // style={{ width: "200px" }}
+                                style={{ marginLeft: "20px" }}
+                            />
+                        </Grid>
+                    </Grid.Container>
+                    <Table
+                        bordered
+                        shadow={false}
+                        color="secondary"
+                        aria-label="Example pagination  table"
+                        css={{
+                            height: "auto",
+                            minWidth: "100%",
+                        }}
+                        selectionMode="none"
+                    >
+                        <Table.Header columns={columns}>
+                            {(column) => (
+                                <Table.Column
+                                    key={column.uid}
+                                    hideHeader={column.uid === "actions"}
+                                    align={column.uid === "actions" ? "center" : "start"}>
+                                    {column.name}
+                                </Table.Column>
+                            )}
+                        </Table.Header>
+                        <Table.Body items={searchList}>
+                            {searchList.map(user => (
+                                <Table.Row>
+                                    {columns.map(col => (
+                                        <Table.Cell>
+                                            {console.log(col.uid)}
+                                            {renderCell(user, col.uid)}
+                                        </Table.Cell>))}
+                                </Table.Row>
+                            ))}
+                        </Table.Body>
+                        <Table.Pagination
+                            shadow
+                            noMargin
+                            align="center"
+                            rowsPerPage={7}
+                            onPageChange={(page) => console.log({ page })}
+                        />
+                    </Table>
+                    <Button color="gradient" onClick={props.exit} css={{ mx: 'auto', mt: '10' }}>Confirm</Button>
+                </Card.Body>
+            </Card>
+        </div >
 
     )
 }
