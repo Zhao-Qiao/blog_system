@@ -60,11 +60,17 @@ function CreateContent(props) {
             </Grid.Container>
             <Grid.Container gap={2} justify="center">
                 <Grid>
-                    <Button shadow color="secondary" auto rounded onClick={() => submitContent(titleRef.current.value, contentRef.current.value)}>
+                    <Button shadow color="secondary" auto rounded onClick={() => {
+                        submitContent(titleRef.current.value, contentRef.current.value)
+                        props.exit()
+                    }}>
                         {"Confirm"}
                     </Button>
                 </Grid><Grid>
-                    <Button shadow color="error" auto rounded onClick={() => cancelSubmit()}>
+                    <Button shadow color="error" auto rounded onClick={() => {
+                        cancelSubmit()
+                        props.exit()
+                    }}>
                         {"Cancel"}
                     </Button>
                 </Grid>

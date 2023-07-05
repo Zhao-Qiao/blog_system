@@ -7,7 +7,7 @@ import AdminScreen from "./screens/AdminScreen";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import ErrorPage from "./screens/ErrorPage";
 import { NextUIProvider } from "@nextui-org/react";
-
+import Axios from "axios";
 function App() {
   console.log("HI")
   return (

@@ -147,6 +147,7 @@ function SearchFriends(props) {
                     onPageChange={(page) => console.log({ page })}
                 />
             </Table>
+            <Button onClick={props.exit}>Confirm</Button>
         </div>
 
     )
