@@ -13,7 +13,6 @@ const db = mysql.createConnection({
     host: 'localhost',
     user: "root",
     password: "Dd20020429",
-    // password: "mysql",
     database: "task_management_system"
 })
 
@@ -21,6 +20,7 @@ app.post('/api/submit_content', (req, res) => {
     const username = req.body.username
     const time = req.body.time
     const content = req.body.content
+    console.log("content", content)
     const title = req.body.title
     const sqlInsert = "INSERT INTO POSTS (time,username, title,content) VALUES (?, ?,?,?)"
     db.query(sqlInsert, [time, username, title, content], (err, result) => {
@@ -66,6 +66,23 @@ app.post('/api/fetch_user', (req, res) => {
             res.send(result)
         } else {
             res.send({ message: "No user exists!" })
+        }
+    })
+})
+
+app.post('/api/fetch_friends', (req, res) => {
+    const username = req.body.username
+    console.log('username', username)
+    const sqlInsert = "SELECT distinct followee FROM FOLLOW WHERE follower = ?"
+    db.query(sqlInsert, [username], (err, result) => {
+        if (result.length > 0) {
+            const followees = result.map((item) => item.followee)
+            console.log(followees)
+            console.log(result)
+            res.send(followees)
+        }
+        else{
+            res.send({message: "You have no friends!"})
         }
     })
 })
@@ -184,7 +201,21 @@ app.post('/api/update_task', (req, res) => {
     //     task_name is
 })
 
-
+app.post('/api/fetch_content', (req, res) => {
+  //fetch content by usernames
+    const userlist = req.body.userlist.toString()
+    const sqlInsert = "SELECT * FROM posts WHERE username IN (?)"
+    console.log('userlist', userlist)
+    db.query(sqlInsert, [userlist], (err, result) => {
+        console.log(err)
+        console.log(result)
+        if (result.length > 0) {
+            res.send(result)
+        } else {
+            res.send({ message: "No user exists!" })
+        }
+    })
+})
 
 app.get('/api', (req, res) => {
     //  a demo function to test if server is running

@@ -1,11 +1,12 @@
-import React, {useRef} from 'react'
+import React, {useContext, useRef} from 'react'
 import {useState} from "react";
 import {useNavigate} from "react-router-dom";
 import Axios from "axios";
 import './LoginScreen.css'
+import {UserContext} from "../App";
 function LoginScreen(props) {
-    console.log(props)
     const navigate = useNavigate()
+    const UserState = useContext(UserContext)
     const [LoginState, setLoginState] = useState(false) // value: false if not logged in, username if logged in
     const [usertype, setUsertype] = useState(null) // value: 'user' or 'admin' or null if not logged in
     const usernameRef = useRef(null)
@@ -21,10 +22,11 @@ function LoginScreen(props) {
                 setLoginState(false)
                 setUsertype(null)
             }else{
+                props.setUserState({username: response.data[0].username, uid:response.data[0].uid})
                 setLoginState(response.data[0].username)
                 setUsertype(response.data[0].type)
                 if(response.data[0].type === 'user'){
-                    navigate('/user')
+                    navigate('/user', {state: {username: response.data[0].username, uid:response.data[0].uid}})
                 }
                 else if(response.data[0].type === 'admin'){
                     navigate('/admin')
@@ -58,7 +60,6 @@ function LoginScreen(props) {
                 <input ref={usernameRef} placeholder="user_name" type="text" className="inputBox"/>
                 <input ref={passwordRef} placeholder="password" type="password" className="inputBox"/>
                 <button type="submit" onClick={Login} className="loginBotton">Sign In</button>
-
                 <h4 className="prompt">
                     <span className="promptText">
                         Haven't got an account?

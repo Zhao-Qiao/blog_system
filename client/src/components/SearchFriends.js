@@ -1,12 +1,14 @@
-import React, { useEffect, useState, useRef } from 'react'
+import React, {useEffect, useState, useRef, useContext} from 'react'
 import { Card, Dropdown } from "@nextui-org/react";
 import { Button, Grid, Input, Loading, Table, Col, Tooltip, User, Text, Row } from '@nextui-org/react';
 import Axios from "axios";
 // import { HeartIcon } from './HeartIcon';
-
+import {UserContext} from "../App";
 
 function SearchFriends(props) {
-    const { loginName } = props
+    const UserState = useContext(UserContext)
+    const {username}  = UserState.UserState
+    console.log('username,', username)
     const columns = [
         { name: "NAME", uid: "username" },
         { name: "ACTIONS", uid: "actions" },
@@ -16,10 +18,10 @@ function SearchFriends(props) {
         { key: "message", name: "Send Message" },
     ];
     const checkF = (followname) => {//check follow...
-        if ({ loginName }.loginName == followname) setCheckFollow(true)
+        if ({ username }.username == followname) setCheckFollow(true)
         else {
             Axios.post('http://localhost:4000/api/check_follow', {
-                follower: { loginName }.loginName,
+                follower: { username }.username,
                 followee: followname
             }).then((response) => {
                 console.log(response)
@@ -27,18 +29,18 @@ function SearchFriends(props) {
             })
         }
 
-        console.log({ loginName }.loginName)
+        console.log({ username }.username)
         console.log(followname)
     }
     const setFollow = (followname) => {//check follow...
         Axios.post('http://localhost:4000/api/set_follow', {
-            follower: { loginName }.loginName,
+            follower: { username }.username,
             followee: followname
         }).then((response) => {
             console.log(response)
             setCheckFollow(true)
         })
-        console.log({ loginName }.loginName)
+        console.log({ username }.username)
         console.log(followname)
     }
     const renderCell = (user, columnKey) => {
@@ -57,7 +59,7 @@ function SearchFriends(props) {
                     <Dropdown>
                         <Dropdown.Button flat onClick={() => checkF(user["username"])}></Dropdown.Button>
                         <Dropdown.Menu aria-label="Dynamic Actions" items={menuItems}
-                            disabledKeys={(checkFollow) ? ({ loginName }.loginName == user["username"] ? ["follow", "message"] : ["follow"]) : []}>
+                            disabledKeys={(checkFollow) ? ({ username }.username == user["username"] ? ["follow", "message"] : ["follow"]) : []}>
                             {(item) => (
                                 <Dropdown.Item
                                     key={item.key}
@@ -147,7 +149,7 @@ function SearchFriends(props) {
                     onPageChange={(page) => console.log({ page })}
                 />
             </Table>
-            <Button onClick={props.exit}>Confirm</Button>
+            <Button onClick={props.exit} css={{mx:'auto', mt:'10'}}>Confirm</Button>
         </div>
 
     )

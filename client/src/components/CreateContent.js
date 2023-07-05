@@ -9,7 +9,7 @@ import Axios from "axios";
 function CreateContent(props) {
     const maxWidth = '600px'//在这里调整宽度
     const navigate = useNavigate()
-    const { loginName } = props
+    const { username } = props
     const titleRef = useRef("")
     const contentRef = useRef("")
     const submitContent = (title, content) => {
@@ -17,7 +17,7 @@ function CreateContent(props) {
         const formattedTime = currentDate.toISOString().slice(0, 19).replace('T', ' ');
         console.log(formattedTime)
         Axios.post('http://localhost:4000/api/submit_content', {
-            username: { loginName }.loginName,
+            username: username,
             time: formattedTime,
             title: title,
             content: content
