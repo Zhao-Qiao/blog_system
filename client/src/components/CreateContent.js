@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useRef } from 'react'
 import { Card, Dropdown } from "@nextui-org/react";
-import { Button, Container, Grid, Input, Loading, Table, Col, Tooltip, User, Text, Row, Textarea } from '@nextui-org/react';
+import { Button, Container, Grid, Input, Loading, Table, Col, Tooltip, User, Text, Row, Textarea, Spacer } from '@nextui-org/react';
 import { useNavigate } from "react-router-dom";
 import Axios from "axios";
 // import { HeartIcon } from './HeartIcon';
@@ -34,7 +34,9 @@ function CreateContent(props) {
     }, [])
     return (
         <div>
+            <Spacer y={1.5}></Spacer>
             <Grid.Container gap={4} justify="center" fluid>
+
                 <Grid>
                     <Input
                         ref={titleRef}
