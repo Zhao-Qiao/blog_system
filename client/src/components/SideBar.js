@@ -14,6 +14,10 @@ function SideBar(props) {
         }).then(
             (response)=>{
                 console.log('your friends:',response)
+                if(response.data.message){
+                    props.setFriends([])
+                    return
+                }
                 props.setFriends(response.data)
             }
         )

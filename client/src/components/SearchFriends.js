@@ -15,7 +15,8 @@ function SearchFriends(props) {
     ]
     const menuItems = [
         { key: "follow", name: "Follow" },
-        { key: "message", name: "Send Message" },
+        { key: "message", name: "Send Message"},
+        { key: "unfollow", name: "Unfollow"}
     ];
     const checkF = (followname) => {//check follow...
         if ({ username }.username == followname) setCheckFollow(true)
@@ -59,7 +60,7 @@ function SearchFriends(props) {
                     <Dropdown>
                         <Dropdown.Button flat onClick={() => checkF(user["username"])}></Dropdown.Button>
                         <Dropdown.Menu aria-label="Dynamic Actions" items={menuItems}
-                            disabledKeys={(checkFollow) ? ({ username }.username == user["username"] ? ["follow", "message"] : ["follow"]) : []}>
+                            disabledKeys={(checkFollow) ? ({ username }.username == user["username"] ? ["follow", "message"] : ["follow"]) : ["unfollow"]}>
                             {(item) => (
                                 <Dropdown.Item
                                     key={item.key}

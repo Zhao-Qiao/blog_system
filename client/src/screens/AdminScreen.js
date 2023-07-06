@@ -70,7 +70,7 @@ function AdminScreen() {
                 );
             case "username":
                 return (
-                    <User squared name={cellValue} css={{ p: 0 }}>
+                    <User squared text = {cellValue.toUpperCase()[0]} name={cellValue} css={{ p: 0 }}>
                         {cellValue}
                     </User>
                 );
