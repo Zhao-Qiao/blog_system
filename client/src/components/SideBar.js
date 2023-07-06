@@ -4,10 +4,8 @@ import {AddUser} from "react-iconly";
 import Axios from "axios";
 // import "./SideBar.css"
 function SideBar(props) {
-    const friendsA = ['123', '234','345', '456']
-    const friendsB = ['123', '234','345', '456']
-    const [friends, setFriends] = useState([])
-    console.log('username',props.username)
+    console.log('sidebarpsops',props)
+    const {display_user} = props
     // side bar display the groups that the user joined in, and displays other members inside the group
     // format: [{group_name: str, members: [id1, id2, ...]}, ...]
     const fetchFriends = (e)=>{
@@ -16,7 +14,7 @@ function SideBar(props) {
         }).then(
             (response)=>{
                 console.log('your friends:',response)
-                setFriends(response.data)
+                props.setFriends(response.data)
             }
         )
     }
@@ -26,7 +24,7 @@ function SideBar(props) {
     },[])
     const renderId = (id)=>{
         return (
-            <Grid xs={12} css={{bg:'0'}}>
+            <Grid xs={12} css={{bg:'0'}} onClick={()=>display_user(id)}>
             <Text css={{ta: 'center',m: "0 auto"}}>{id}</Text>
             </Grid>
         )
@@ -36,14 +34,9 @@ function SideBar(props) {
             <Collapse.Group accordion={false} className={"SideBar"}>
                 <Collapse title={"Your Friends"}>
                     <Grid.Container gap={2}>
-                    {friends.map(friend=>(renderId(friend)))}
+                    {props.friends.map(friend=>(renderId(friend)))}
                     </Grid.Container>
                 </Collapse>
-                {/*<Collapse title={"Friends GroupB"}>*/}
-                {/*    <Grid.Container gap={2}>*/}
-                {/*        {friendsB.map(friend=>(renderId(friend)))}*/}
-                {/*    </Grid.Container>*/}
-                {/*</Collapse>*/}
                 <Button bordered color={"success"} icon={<AddUser set="bold" primaryColor="success"/>} onClick={props.handleButton}>ADD FRIEND</Button>
             </Collapse.Group>
 

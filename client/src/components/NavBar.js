@@ -2,10 +2,9 @@ import React, { useContext } from 'react'
 import { Avatar, Navbar, Text, Link, Spacer, User, Input, spacer } from "@nextui-org/react";
 import { UserContext } from "../App";
 function NavBar(props) {
-    const UserState = useContext(UserContext)
-    const { display_myself } = props
-    const { display_all } = props
-    console.log('2', UserState.UserState.username) // 不知道为啥这个UserState在这里成了一个字典的字典：{UserState:{sssss}}
+    const {display_myself} = props
+    const {display_all} = props
+    console.log('2',UserState.UserState.username) // 不知道为啥这个UserState在这里成了一个字典的字典：{UserState:{sssss}}
     return (
         <div className="NavBar">
             <Navbar shouldHideOnScroll varient="sticky" isBordered isCompact>
